@@ -51,9 +51,6 @@ class Account(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     
-    groups = models.ManyToManyField(Group)
-    user_permissions = models.ManyToManyField(Permission)
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'phone_number']
     
