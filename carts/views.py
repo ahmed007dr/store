@@ -51,6 +51,13 @@ def remove_cart(request, product_id):
         return HttpResponse('Product not found in cart')
     return redirect('cart')
 
+def remove_cart_item(request,product_id):
+    cart = Cart.objects.get(cart_id=_cart_id(request))
+    product = Product.objects.get(id=product_id)
+    cart_item = CartItem.objects.get(product=product, cart=cart)
+    cart_item.delete()
+    return redirect('cart')
+
 
 def cart(request):
     try:
