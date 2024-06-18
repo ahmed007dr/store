@@ -1,4 +1,4 @@
-from django.shortcuts import render ,redirect
+from django.shortcuts import render ,redirect ,HttpResponse
 from store.models import Product
 from .models import Cart ,CartItem
 from django.core.exceptions import ObjectDoesNotExist
@@ -37,6 +37,20 @@ def add_cart(request,product_id):
     return redirect('cart')
 
 
+def remove_cart(request, product_id):
+    cart = Cart.objects.get(cart_id=_cart_id(request))
+    product = Product.objects.get(id=product_id)
+    try:
+        cart_item = CartItem.objects.get(product=product, cart=cart)
+        if cart_item.quantity > 1:
+            cart_item.quantity -= 1
+            cart_item.save()
+        else:
+            cart_item.delete()
+    except ObjectDoesNotExist:
+        return HttpResponse('Product not found in cart')
+    return redirect('cart')
+
 
 def cart(request):
     try:
@@ -69,3 +83,5 @@ def cart(request):
     }
     
     return render(request, 'store/carts.html', context)
+
+
