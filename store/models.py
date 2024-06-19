@@ -51,4 +51,4 @@ class Variation(models.Model):
 
 
     def __str__(self):
-        return self.product
+        return f"{self.id} - {self.product} - {self.variation_value}"
