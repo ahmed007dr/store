@@ -29,31 +29,30 @@
                         <p>{{ single_product.description }}</p>
                         
                         <hr>
-                        
                         <div class="row">
-                            <div class="item-option-select">
-                                <h6>Choose Color</h6>
-                                <select name="color" class="form-control" required>
-                                    <option value="" disabled selected>Choose Color</option>
-                                    {% for variation in single_product.set.all %}
-                                        <option value="{{ variation.variation_value }}">{{ variation.variation_value }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div> <!-- row.// -->
-
-                        <div class="row">
-                            <div class="item-option-select">
-                                <h6>Select Size</h6>
-                                <select name="size" class="form-control">
-                                    <option value="" disabled selected>Select Size</option>
-                                    {% for variation in single_product.set.all %}
-                                        <option value="{{ variation.variation_value }}">{{ variation.variation_value }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div> <!-- row.// -->
-                                        
+                          <div class="item-option-select">
+                              <h6>Choose Color</h6>
+                              <select name="color" class="form-control" required>
+                                  <option value="" disabled selected>Choose Color</option>
+                                  {% for color in colors %}
+                                      <option value="{{ color.variation_value }}">{{ color.variation_value }}</option>
+                                  {% endfor %}
+                              </select>
+                          </div>
+                      </div>
+                      
+                      <div class="row">
+                          <div class="item-option-select">
+                              <h6>Select Size</h6>
+                              <select name="size" class="form-control">
+                                  <option value="" disabled selected>Select Size</option>
+                                  {% for size in sizes %}
+                                      <option value="{{ size.variation_value }}">{{ size.variation_value }}</option>
+                                  {% endfor %}
+                              </select>
+                          </div>
+                      </div>
+                      
                         <hr>
                     
                         {% if single_product.stock <= 0 %}
