@@ -37,7 +37,7 @@ def product_details(request,category_slug,product_slug):
     
     context = {
         'single_product' : single_product,
-        'in_cart':in_cart
+        'in_cart':in_cart,
         }
     
 
