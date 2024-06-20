@@ -1,7 +1,8 @@
-from django.shortcuts import render ,redirect ,HttpResponse
+from django.shortcuts import render ,redirect 
 from store.models import Product
 from .models import Cart ,CartItem
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 
 
 def _cart_id(request):
@@ -14,10 +15,13 @@ def _cart_id(request):
 
 def add_cart(request,product_id):
     if request.method == 'POST':
+        for item in request.POST:
+            key = item
+            value = request.POST[key]
             
-        color = request.POST['color']
-        size = request.POST['size']
-    
+            print(key,value)
+
+
 
     product = Product.objects.get(id=product_id) # get the product 
     try:
