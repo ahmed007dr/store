@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from .forms import RegistrationForm
 from .models import Account
 from django.utils import timezone  # Import timezone to set date_joined
-
+from django.contrib import messages
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -25,6 +25,8 @@ def register(request):
                 date_joined=timezone.now()  # Set date_joined to current time
             )
             user.save()
+            messages.success (request,'registerion successful')
+            return redirect('register')
     else:
         form = RegistrationForm()
 
