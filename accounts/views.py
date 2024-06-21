@@ -3,6 +3,8 @@ from .forms import RegistrationForm
 from .models import Account
 from django.utils import timezone  # Import timezone to set date_joined
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -36,8 +38,26 @@ def register(request):
     return render(request, 'accounts/register.html', context)
 
 
+
 def login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        
+        user = authenticate(request, email=email, password=password)
+        
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'You are now logged in.')
+            return redirect('home')  # Redirect to home page after successful login
+        else:
+            messages.error(request, 'Invalid email or password.')
+            return redirect('login')  # Redirect back to login page if authentication fails
+    
     return render(request, 'accounts/login.html')
 
+
 def loggout(request):
-    return 
+    logout(request)
+    messages.success(request, 'You have been logged out.')
+    return redirect('home')  
