@@ -1,34 +1,21 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from .models import Account
-from django.utils import timezone  # Import timezone to set date_joined
+from django.utils import timezone
 from django.contrib import messages
-from django.contrib.auth import authenticate, login ,logout
+from django.contrib.auth import authenticate, login
 
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            # Extract cleaned data from the form
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            phone_number = form.cleaned_data['phone_number']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
+            user = form.save(commit=False)  
+            user.username = user.email.split('@')[0]  
+            user.date_joined = timezone.now()  
+            user.save()  
 
-            # Create a new Account object
-            user = Account.objects.create_user(
-                first_name=first_name,
-                last_name=last_name,
-                email=email,
-                password=password,
-                username=email.split('@')[0],
-                phone_number=phone_number,
-                date_joined=timezone.now()  # Set date_joined to current time
-            )
-            user.save()
-            messages.success (request,'registerion successful')
-            return redirect('register')
+            messages.success(request, 'Registration successful')
+            return redirect('login')  
     else:
         form = RegistrationForm()
 
@@ -38,21 +25,21 @@ def register(request):
     return render(request, 'accounts/register.html', context)
 
 
-def login(request):
+def user_login(request):
     if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        auth = authenticate
-        user = auth(email=email,password=password)
-        if user is not None:
-            auth.login(request, user)
-            messages.success(request, 'login successful')
-            return redirect('login')
-        else:
-            messages.error(request,'invalid login ')
-            return redirect('login')
-    return render(request, 'accounts/login.html')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(request, email=email, password=password)
 
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'Login successful')
+            return redirect('home')  # Replace 'home' with your desired redirect URL after login
+        else:
+            messages.error(request, 'Invalid login credentials')
+            return redirect('login')  # Redirect back to login page with error message
+
+    return render(request, 'accounts/login.html')
 
 
 # def login(request):
