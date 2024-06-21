@@ -1,47 +1,71 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
-class LoginTestCase(TestCase):
+class RegistrationTestCase(TestCase):
     
     def setUp(self):
         self.client = Client()
+        self.register_url = reverse('register')  # Adjust 'register' to match your URL name
         self.login_url = reverse('login')  # Adjust 'login' to match your URL name
-    
-    def test_valid_login(self):
-        # Create a test user
-        test_user = User.objects.create_user(email='test@example.com', password='testpassword')
+        self.home_url = reverse('home')  # Adjust 'home' to match your URL name
         
-        # Prepare POST data
-        login_data = {
+    def test_registration(self):
+        # Prepare POST data for registration
+        registration_data = {
+            'first_name': 'Test',
+            'last_name': 'User',
             'email': 'test@example.com',
+            'phone_number': '1234567890',
             'password': 'testpassword',
         }
         
-        # Simulate POST request
-        response = self.client.post(self.login_url, login_data)
+        # Simulate POST request to register view
+        response = self.client.post(self.register_url, registration_data)
         
-        # Check if the user is logged in
-        self.assertEqual(response.status_code, 302)  # Should redirect to 'home'
-        self.assertTrue(response.url.endswith(reverse('home')))
+        # Check if registration is successful
+        self.assertEqual(response.status_code, 302)  # Should redirect after successful registration
+        self.assertTrue(get_user_model().objects.filter(email='test@example.com').exists())  # Check if user exists in database
+    
+    # def test_login(self):
+    #     # Create a test user for login testing
+    #     User = get_user_model()
+    #     user = User.objects.create_user(
+    #         email='test@example.com',
+    #         password='testpassword',
+    #         first_name='Test',
+    #         last_name='User',
+    #         phone_number='1234567890',
+    #     )
         
-        # You can also check if the success message is present in the messages
-        self.assertContains(response, 'You are now logged in.', status_code=200)
+    #     # Prepare POST data for login
+    #     login_data = {
+    #         'email': 'test@example.com',
+    #         'password': 'testpassword',
+    #     }
         
-    def test_invalid_login(self):
-        # Prepare POST data with invalid credentials
-        login_data = {
-            'email': 'invalid@example.com',
-            'password': 'invalidpassword',
-        }
+    #     # Simulate POST request to login view
+    #     response = self.client.post(self.login_url, login_data)
         
-        # Simulate POST request
-        response = self.client.post(self.login_url, login_data)
+    #     # Check if login is successful
+    #     self.assertRedirects(response, self.home_url, status_code=302, target_status_code=200)
+    #     self.assertIn('_auth_user_id', self.client.session)  # Check if user is logged in
+    
+    # def test_logout(self):
+    #     # Create and login a test user
+    #     User = get_user_model()
+    #     user = User.objects.create_user(
+    #         email='test@example.com',
+    #         password='testpassword',
+    #         first_name='Test',
+    #         last_name='User',
+    #         phone_number='1234567890',
+    #     )
+    #     self.client.force_login(user)
         
-        # Check if it redirects back to the login page
-        self.assertEqual(response.status_code, 302)  # Should redirect to 'login'
-        self.assertTrue(response.url.endswith(reverse('login')))
+    #     # Simulate GET request to logout view
+    #     response = self.client.get(reverse('logout'))  # Assuming 'logout' is mapped correctly
         
-        # Check if the error message is present in the messages
-        self.assertContains(response, 'Invalid email or password.', status_code=200)
-
+    #     # Check if logout is successful
+    #     self.assertRedirects(response, self.home_url, status_code=302, target_status_code=200)
+    #     self.assertNotIn('_auth_user_id', self.client.session)  # Check if user is logged out

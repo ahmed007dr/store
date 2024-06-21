@@ -22,7 +22,7 @@ def register(request):
                 last_name=last_name,
                 email=email,
                 password=password,
-                username=email.split('@')[0],
+                username=email,
                 phone_number=phone_number,
                 date_joined=timezone.now()  # Set date_joined to current time
             )
