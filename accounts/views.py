@@ -22,7 +22,7 @@ def register(request):
                 last_name=last_name,
                 email=email,
                 password=password,
-                username=email,
+                username=email.split('@')[0],
                 phone_number=phone_number,
                 date_joined=timezone.now()  # Set date_joined to current time
             )
@@ -38,23 +38,39 @@ def register(request):
     return render(request, 'accounts/register.html', context)
 
 
-
 def login(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        
-        user = authenticate(request, email=email, password=password)
-        
+        email = request.POST['email']
+        password = request.POST['password']
+        auth = authenticate
+        user = auth(email=email,password=password)
         if user is not None:
-            login(request, user)
-            messages.success(request, 'You are now logged in.')
-            return redirect('home')  # Redirect to home page after successful login
+            auth.login(request, user)
+            messages.success(request, 'login successful')
+            return redirect('login')
         else:
-            messages.error(request, 'Invalid email or password.')
-            return redirect('login')  # Redirect back to login page if authentication fails
-    
+            messages.error(request,'invalid login ')
+            return redirect('login')
     return render(request, 'accounts/login.html')
+
+
+
+# def login(request):
+#     if request.method == 'POST':
+#         email = request.POST.get('email')
+#         password = request.POST.get('password')
+        
+#         user = authenticate(request, email=email, password=password)
+        
+#         if user is not None:
+#             login(request, user)
+#             messages.success(request, 'You are now logged in.')
+#             return redirect('home')  # Redirect to home page after successful login
+#         else:
+#             messages.error(request, 'Invalid email or password.')
+#             return redirect('login')  # Redirect back to login page if authentication fails
+    
+#     return render(request, 'accounts/login.html')
 
 
 def loggout(request):
