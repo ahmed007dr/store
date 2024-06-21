@@ -37,17 +37,23 @@
                     </thead>
                     <tbody>
                         {% for cart_item in cart_items %}
-                            <tr>
-                                <td>
-                                    <figure class="itemside align-items-center">
-                                        <div class="aside"><img src="{{ cart_item.product.image.url }}" class="img-sm"></div>
-                                        <figcaption class="info">
-                                            <a href="{{ cart_item.product.get.url }}" class="title text-dark">{{ cart_item.product.Product_name }}</a>
-                                            <p class="text-muted small">color: 25 Mpx <br> size: {{ cart_item.product.category }}</p>
-                                        </figcaption>
-                                    </figure>
-                                </td>
-                                <td> 
+                        <tr>
+                            <td>
+                                <figure class="itemside align-items-center">
+                                    <div class="aside"><img src="{{ cart_item.product.image.url }}" class="img-sm"></div>
+                                    <figcaption class="info">
+                                        <a href="{{ cart_item.product.get.url }}" class="title text-dark">{{ cart_item.product.Product_name }}</a>
+                                        <p class="text-muted small">
+                                            {% if cart_item.variations.all %}
+                                                {% for item in cart_item.variations.all %}
+                                                    {{ item.variation_category }} : {{ item.variation_value }} <br>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </p>
+                                    </figcaption>
+                                </figure>
+                            </td>
+                            <td>                                                            
                                     <div class="col"> 
                                         <div class="input-group input-spinner">
                                             <div class="input-group-prepend">

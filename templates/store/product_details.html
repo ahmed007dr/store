@@ -59,15 +59,9 @@
                         {% if single_product.stock <= 0 %}
                             <h5 class="text-danger">Out of stock</h5>
                         {% else %}
-                            {% if in_cart %}
-                                <!-- If product is already in cart -->
-                                <a href="#" class="btn btn-success"> <span class="text">Added to cart</span> <i class="fas fa-check"></i> </a>
-                                <a href="{% url 'cart' %}" class="btn btn-success"> <span class="text">View cart</span> <i class="fas fa-eye"></i> </a>
-                            {% else %}
-                                <!-- If product is not in cart -->
-                                <button type="submit" class="btn btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </button>
-                            {% endif %}
+                            <button type="submit" class="btn btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </button>
                         {% endif %}
+                        
 
                     </article> <!-- content-body .// -->
                 </form>
