@@ -58,13 +58,17 @@
 
             <!-- Display form errors if any -->
             {% if form.errors %}
-                <div class="alert alert-danger">
+            <div class="alert alert-danger">
+                <ul>
                     {% for field, errors in form.errors.items %}
-                        <strong>{{ field|title }}</strong>: {{ errors|join:", " }}<br>
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
                     {% endfor %}
-                </div>
+                </ul>
+            </div>
             {% endif %}
-
+        
         </form>
     </article><!-- card-body end -->
 </div><!-- card end -->
