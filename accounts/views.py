@@ -3,7 +3,7 @@ from .forms import RegistrationForm
 from .models import Account
 from django.utils import timezone  # Import timezone to set date_joined
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login ,logout
 
 def register(request):
     if request.method == 'POST':
