@@ -7,7 +7,7 @@ class RegistrationForm(ModelForm):
         'placeholder': 'Enter Password',
         'class': 'form-control',
     }))
-    conform_password = forms.CharField(widget=forms.PasswordInput(attrs={
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Repeat Password',
         'class': 'form-control',
     }))
@@ -16,14 +16,14 @@ class RegistrationForm(ModelForm):
         model = Account
         fields = ["first_name", "last_name", "phone_number", "email", "password"]
 
-    def __init__(self, *args, **kwargs):  # Corrected initialization method name
+    def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields["first_name"].widget.attrs['placeholder'] = 'Enter your first name'
         self.fields["last_name"].widget.attrs['placeholder'] = 'Enter your last name'
         self.fields["phone_number"].widget.attrs['placeholder'] = 'Enter your phone number'
         self.fields["email"].widget.attrs['placeholder'] = 'Enter your email'
         self.fields["password"].widget.attrs['placeholder'] = 'Enter your password'
-        self.fields["conform_password"].widget.attrs['placeholder'] = 'Enter your confirm password'
+        self.fields["confirm_password"].widget.attrs['placeholder'] = 'Enter your confirm password'
 
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
@@ -31,10 +31,9 @@ class RegistrationForm(ModelForm):
     def clean(self):
         cleaned_data = super(RegistrationForm, self).clean()
         password = cleaned_data.get("password")
-        conform_password = cleaned_data.get("conform_password")
+        confirm_password = cleaned_data.get("confirm_password")
 
-        if password != conform_password :
-            raise forms.ValidationError("Password does not match!")
-        else:
-            return cleaned_data
-        
+        if password != confirm_password:
+            raise forms.ValidationError("Passwords do not match!")
+
+        return cleaned_data
