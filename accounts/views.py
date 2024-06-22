@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout 
+from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm
 
 def register(request):
@@ -36,8 +37,10 @@ def user_login(request):
 
     return render(request, 'accounts/login.html')
 
+
+@login_required(login_url='login')
 def user_logout(request):
     logout(request)
     messages.success(request, 'You have been logged out.')
-    return redirect('home')  # Replace 'home' with your desired redirect URL after logout
+    return redirect('home')  
 
