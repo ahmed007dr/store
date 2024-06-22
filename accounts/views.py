@@ -40,3 +40,4 @@ def user_logout(request):
     logout(request)
     messages.success(request, 'You have been logged out.')
     return redirect('home')  # Replace 'home' with your desired redirect URL after logout
+
