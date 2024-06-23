@@ -116,3 +116,7 @@ def resend_verification_email(request):
         form = RegistrationForm()
     
     return render(request, 'accounts/resend_verification_email.html', {'form': form})
+
+@login_required(login_url='login')
+def dashbord(request):
+    return render (request,'accounts/dashbord.html')
