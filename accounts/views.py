@@ -120,3 +120,7 @@ def resend_verification_email(request):
 @login_required(login_url='login')
 def dashbord(request):
     return render (request,'accounts/dashbord.html')
+
+
+def forgotPassword(request):
+    return render (request,'accounts/forgotPassword.html')
