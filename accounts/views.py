@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect ,get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.decorators import login_required
@@ -85,3 +85,34 @@ def activate(request, uidb64, token):
     else:
         messages.error(request, 'Invalid activation link.')
         return redirect('login')
+
+
+
+def resend_verification_email(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            user = get_object_or_404(User, email=email)
+
+            if user.is_active:
+                messages.info(request, 'Your account is already active.')
+            else:
+                current_site = get_current_site(request)
+                mail_subject = 'Activate your account.'
+                message = render_to_string('accounts/acc_active_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': default_token_generator.make_token(user),
+                })
+                to_email = form.cleaned_data.get('email')
+                email = EmailMessage(mail_subject, message, to=[to_email])
+                email.send()
+
+                messages.success(request, 'A new activation link has been sent to your email.')
+            return redirect('login')  
+    else:
+        form = RegistrationForm()
+    
+    return render(request, 'accounts/resend_verification_email.html', {'form': form})
