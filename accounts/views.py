@@ -10,6 +10,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
+from .models import Account
 
 User = get_user_model()
 
@@ -121,6 +122,62 @@ def resend_verification_email(request):
 def dashbord(request):
     return render (request,'accounts/dashbord.html')
 
-
 def forgotPassword(request):
-    return render (request,'accounts/forgotPassword.html')
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if Account.objects.filter(email=email).exists():
+            user = Account.objects.get(email=email)
+
+            # Generate and send password reset email
+            current_site = get_current_site(request)
+            mail_subject = 'Reset your password'
+            message = render_to_string('accounts/reset_password_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': default_token_generator.make_token(user),
+            })
+            to_email = email
+            email = EmailMessage(mail_subject, message, to=[to_email])
+            email.send()
+            
+            messages.success(request, 'Password reset link sent to your email address.')
+            return redirect('login')  # Redirect to login page after sending email
+        else:
+            messages.error(request, 'This email does not exist.')
+            return redirect('forgotpassword')  # Redirect back to forgot password form
+        
+    return render(request, 'accounts/forgotpassword.html')
+
+
+def password_reset_confirm(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        request.session['uid'] = uid
+        messages.success(request,'please reset your password')
+        return redirect('resetpassword')
+    else:
+        messages.error(request, 'Invalid token or link has expired')
+        return redirect('login')
+    
+def resetpassword(request):
+    if request.method == 'POST':
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+        if password == confirm_password :
+            uid = request.session.get('uid')
+            user = Account.objects.get(pk=uid)
+            user.set_password(password)
+            user.save()
+            messages.success(request,' we are done successe')
+            return redirect('login')
+        else:
+            messages.error(request,'password dont match ')
+            return redirect('resetpassword')
+    else:     
+        return render (request,'accounts/resetpassword.html')

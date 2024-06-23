@@ -5,10 +5,13 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
-    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
     path('resend-verification-email/', views.resend_verification_email, name='resend_verification_email'),
     path('dashbord/', views.dashbord, name='dashbord'),
     path('', views.dashbord, name='dashbord'),
+
+    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
     path('forgotPassword/', views.forgotPassword, name='forgotPassword'),
+    path('password_reset_confirm/<str:uidb64>/<str:token>/', views.password_reset_confirm, name='password_reset_confirm'),
+    path('resetpassword/', views.resetpassword, name='resetpassword'),
 
 ]
