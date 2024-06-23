@@ -3,15 +3,12 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm
-
-#account activated email :-
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_decode,urlsafe_base64_encode
-from django.utils.encoding import  force_bytes , force_str  
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_str  
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
-
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -21,11 +18,13 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.username = user.email.split('@')[0]  
-            user.is_active = False  
+            user.username = user.email.split('@')[0]  # Set username based on email
+            user.is_active = False  # Initially set user as inactive until email is verified
+            password = form.cleaned_data.get('password')  # Assuming your form has a 'password' field
+            user.set_password(password)
             user.save()
 
-            # Send activation email
+            # Send activation email (uncomment and modify as needed)
             current_site = get_current_site(request)
             mail_subject = 'Activate your account.'
             message = render_to_string('accounts/acc_active_email.html', {
@@ -46,23 +45,6 @@ def register(request):
         'form': form
     }
     return render(request, 'accounts/register.html', context)
-
-
-def activate(request, uidb64, token):
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-
-    if user is not None and default_token_generator.check_token(user, token):
-        user.is_active = True
-        user.save()
-        messages.success(request, 'Your account has been activated successfully.')
-        return redirect('login')
-    else:
-        messages.error(request, 'Invalid activation link.')
-        return redirect('login')
 
 
 def user_login(request):
@@ -88,3 +70,18 @@ def user_logout(request):
     messages.success(request, 'You have been logged out.')
     return redirect('home')  
 
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Your account has been activated successfully.')
+        return redirect('login')
+    else:
+        messages.error(request, 'Invalid activation link.')
+        return redirect('login')

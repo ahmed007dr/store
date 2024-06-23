@@ -152,5 +152,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'ahmed.tamem.eg@gmail.com'  
-EMAIL_HOST_PASSWORD = 'dr#ahmed#tamem#egypt'     
+EMAIL_HOST_PASSWORD = 'ffsapmlfgdjupadu'     
 SITE_ID = 1  
