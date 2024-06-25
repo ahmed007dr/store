@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<header>
+    <!-- Your header content here -->
+</header> <!-- section-header.// -->
+
+<section class="section-content padding-y bg">
+    <div class="container">
+
+        <!-- ============================ COMPONENT 1 ================================= -->
+        <div class="row">
+            <aside class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4"> billing address</h4>      
+                        <form action="">
+                            <div class="form-row">
+                                <div class=" col form-group">
+                                <label for="">First Name</label>
+                                <input type="text" name="first_name" class="form-control" required>
+                                </div>
+                            <div class="col form-row">
+                                <div class=" col form-group">
+                                    <label for="">last Name</label>
+                                    <input type="text" name="last_name" class="form-control" required>
+                                    </div>
+                                </div>
+                            <div class="form-row">
+                                <div class=" col form-group">
+                                <label for="">email </label>
+                                <input type="text" name="email" class="form-control" required>
+                                </div>
+                            <div class="col form-row">
+                                <div class=" col form-group">
+                                    <label for="">phone number</label>
+                                    <input type="text" name="phone" class="form-control" required>
+                                    </div>
+
+                                </div>
+                                <div class="form-row">
+                                <div class=" col form-group">
+                                    <label for="">address 1 </label>
+                                    <input type="text" name="address_1" class="form-control" required>
+                                    </div>
+                                <div class="col form-row">
+                                    <div class=" col form-group">
+                                        <label for="">address 2</label>
+                                        <input type="text" name="address_2" class="form-control" >
+                                        </div>
+                                    </div>
+                                <div class="form-row">
+                                <div class=" col form-group">
+                                    <label for="">city</label>
+                                    <input type="text" name="city" class="form-control" required>
+                                    </div>
+                                <div class="col form-row">
+                                    <div class=" col form-group">
+                                        <label for="">state</label>
+                                        <input type="text" name="state" class="form-control" required>
+                                        </div>
+                                    </div>
+                                <div class="col form-row">
+                                        <div class=" col form-group">
+                                            <label for="">country</label>
+                                            <input type="text" name="country" class="form-control" required>
+                                            </div>
+                                    </div> 
+                   
+                            </form>
+
+                    </div>
+            </aside> <!-- col.// -->
+            
+            <aside class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+
+                        <a href="{% url 'checkout' %}" class="btn btn-primary btn-block"> Checkout </a>
+                        <a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
+                    </div> <!-- card-body.// -->
+                </div> <!-- card.// -->
+            </aside> <!-- col.// -->
+        </div> <!-- row.// -->
+
+    </div> <!-- container .//  -->
+</section>
+
+{% endblock %}
