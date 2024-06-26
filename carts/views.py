@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect ,render
 from store.models import Product,Variation
 from .models import Cart ,CartItem
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 def _cart_id(request):
     cart = request.session.session_key
@@ -112,3 +112,35 @@ def cart(request,total=0 , quntity=0 , cart_item=None):
     return render(request, 'store/carts.html', context)
 
 
+@login_required(login_url='login')
+def checkout(request):
+    try:
+        cart = Cart.objects.get(cart_id=_cart_id(request))
+        cart_items = CartItem.objects.filter(cart=cart, is_active=True)
+        
+        total = 0
+        quantity = 0
+        for cart_item in cart_items:
+            total += (cart_item.product.price * cart_item.quantity)
+            quantity += cart_item.quantity
+
+        tax = (14 *total)/100
+        grand_total = total + tax
+
+        
+    except ObjectDoesNotExist:
+        cart = None
+        cart_items = None
+        total = 0
+        quantity = 0
+    
+    context = {
+        'cart': cart,
+        'cart_items': cart_items,
+        'total': total,
+        'quantity': quantity,
+        'tax':tax,
+        'grand_total':grand_total,
+    }
+    
+    return render(request,'store/checkout.html',context)
