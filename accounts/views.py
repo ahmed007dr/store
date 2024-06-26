@@ -11,7 +11,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
 from .models import Account
-
+from carts.models import Cart ,CartItem
+from carts.views import _cart_id
 User = get_user_model()
 
 def register(request):
@@ -55,12 +56,27 @@ def user_login(request):
         user = authenticate(request, email=email, password=password)
 
         if user is not None:
+            try:
+                cart = Cart.objects.get(cart_id=_cart_id(request))  # Assuming _cart_id function is defined somewhere
+                cart_items = CartItem.objects.filter(cart=cart)
+
+                for item in cart_items:
+                    item.user = user  # Associate each CartItem with the logged-in user
+                    item.save()
+
+            except Cart.DoesNotExist:
+                pass  # Handle case where cart does not exist
+
             login(request, user)
             messages.success(request, 'Login successful')
-            return redirect('home')  # Replace 'home' with your desired redirect URL after login
+            return redirect('home')  # Redirect to home page after successful login
+        
         else:
             messages.error(request, 'Invalid login credentials')
             return redirect('login')  # Redirect back to login page with error message
+
+    return render(request, 'accounts/login.html')
+
 
     return render(request, 'accounts/login.html')
 
