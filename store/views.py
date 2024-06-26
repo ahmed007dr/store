@@ -2,10 +2,11 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Product
 from category.models import Category
-from carts.models import CartItem
+from carts.models import CartItem,Cart
 from carts.views import _cart_id
 from django.core.paginator import EmptyPage,PageNotAnInteger,Paginator
 from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
 
 def store(request, category_slug=None):
     categories = None
@@ -82,4 +83,33 @@ def search(request):
 
 
 def checkout(request):
-    return render(request,'store/checkout.html')
+    try:
+        cart = Cart.objects.get(cart_id=_cart_id(request))
+        cart_items = CartItem.objects.filter(cart=cart, is_active=True)
+        
+        total = 0
+        quantity = 0
+        for cart_item in cart_items:
+            total += (cart_item.product.price * cart_item.quantity)
+            quantity += cart_item.quantity
+
+        tax = (14 *total)/100
+        grand_total = total + tax
+
+        
+    except ObjectDoesNotExist:
+        cart = None
+        cart_items = None
+        total = 0
+        quantity = 0
+    
+    context = {
+        'cart': cart,
+        'cart_items': cart_items,
+        'total': total,
+        'quantity': quantity,
+        'tax':tax,
+        'grand_total':grand_total,
+    }
+    
+    return render(request,'store/checkout.html',context)
