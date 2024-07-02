@@ -14,7 +14,7 @@
             <aside class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <form action="" method="POST">
+                        <form action="{% url 'place_order' %}" method="POST">
                             {% csrf_token %}
                             <div class="form-row">
                                 <div class="col form-group">
@@ -33,17 +33,17 @@
                                 </div>
                                 <div class="col form-group">
                                     <label for="phone">Phone Number</label>
-                                    <input type="tel" id="phone" name="phone" class="form-control" required>
+                                    <input type="tel" id="phone" name="phone_number" class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col form-group">
                                     <label for="address_1">Address 1</label>
-                                    <input type="text" id="address_1" name="address_1" class="form-control" required>
+                                    <input type="text" id="address_1" name="address_line_1" class="form-control" required>
                                 </div>
                                 <div class="col form-group">
                                     <label for="address_2">Address 2</label>
-                                    <input type="text" id="address_2" name="address_2" class="form-control">
+                                    <input type="text" id="address_2" name="address_line_2" class="form-control">
                                 </div>
                             </div>
                             <div class="form-row">
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="col form-group">
                                     <label for="state">State</label>
-                                    <input type="text" id="state" name="state" class="form-control" required>
+                                    <input type="text" id="state" name="status" class="form-control" required>
                                 </div>
                                 <div class="col form-group">
                                     <label for="country">Country</label>
@@ -66,6 +66,7 @@
                                     <textarea id="order_note" name="order_note" class="form-control"></textarea>
                                 </div>
                             </div>
+                    
                     </div>
                 </div>
         
@@ -114,11 +115,11 @@
                         </tbody>
                     </table>
                 </div> <!-- card.// -->
-
-                        <button type="submit" name = "submit" class="btn btn-primary btn-block" > place holder </button>
+                
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <button type="submit" name="submit" class="btn btn-primary btn-block">Place Order</button>
                         <a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
-                    </form>
-
                     </div> <!-- card-body.// -->
                 </div> <!-- card.// -->
 
