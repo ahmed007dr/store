@@ -13,6 +13,10 @@ from django.contrib.auth import get_user_model
 from .models import Account
 from carts.models import Cart ,CartItem
 from carts.views import _cart_id
+import requests
+
+
+
 User = get_user_model()
 
 def register(request):
@@ -57,7 +61,7 @@ def user_login(request):
 
         if user is not None:
             try:
-                cart = Cart.objects.get(cart_id=_cart_id(request))  # Assuming _cart_id function is defined somewhere
+                cart = Cart.objects.get(cart_id=_cart_id(request))  
                 cart_items = CartItem.objects.filter(cart=cart)
 
                 for item in cart_items:

@@ -11,6 +11,7 @@ def _cart_id(request):
         cart = request.session.session_key  # Update cart after session creation
     return cart
 
+ 
 def add_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     product_variations = []
@@ -140,7 +141,7 @@ def checkout(request,total=0 , quantity=0 , cart_item = None ):
 
     context = {
         'cart': cart,
-        'cart_items': cart_items,
+        'cart_items': cart_items, 
         'total': total,
         'quantity': quantity,
         'tax':tax,
