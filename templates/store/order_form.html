@@ -4,12 +4,10 @@
 
 <header>
     <!-- Your header content here -->
-</header> <!-- section-header.// -->
+</header>
 
 <section class="section-content padding-y bg">
     <div class="container">
-
-        <!-- ============================ COMPONENT 1 ================================= -->
         <div class="row">
             <aside class="col-lg-6">
                 <div class="card">
@@ -19,59 +17,64 @@
                             <div class="form-row">
                                 <div class="col form-group">
                                     <label for="first_name">First Name</label>
-                                    <input type="text" id="first_name" name="first_name" class="form-control" required>
+                                    <input type="text" id="first_name" name="first_name" class="form-control" value="{{ form.first_name.value }}" required>
                                 </div>
                                 <div class="col form-group">
                                     <label for="last_name">Last Name</label>
-                                    <input type="text" id="last_name" name="last_name" class="form-control" required>
+                                    <input type="text" id="last_name" name="last_name" class="form-control" value="{{ form.last_name.value }}" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" id="email" name="email" class="form-control" required>
+                                    <input type="email" id="email" name="email" class="form-control" value="{{ form.email.value }}" required>
                                 </div>
                                 <div class="col form-group">
                                     <label for="phone">Phone Number</label>
-                                    <input type="tel" id="phone" name="phone_number" class="form-control" required>
+                                    <input type="tel" id="phone" name="phone_number" class="form-control" value="{{ form.phone_number.value }}" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col form-group">
                                     <label for="address_1">Address 1</label>
-                                    <input type="text" id="address_1" name="address_line_1" class="form-control" required>
+                                    <input type="text" id="address_1" name="address_line_1" class="form-control" value="{{ form.address_line_1.value }}" required>
                                 </div>
                                 <div class="col form-group">
                                     <label for="address_2">Address 2</label>
-                                    <input type="text" id="address_2" name="address_line_2" class="form-control">
+                                    <input type="text" id="address_2" name="address_line_2" class="form-control" value="{{ form.address_line_2.value }}">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col form-group">
                                     <label for="city">City</label>
-                                    <input type="text" id="city" name="city" class="form-control" required>
+                                    <input type="text" id="city" name="city" class="form-control" value="{{ form.city.value }}" required>
                                 </div>
                                 <div class="col form-group">
                                     <label for="state">State</label>
-                                    <input type="text" id="state" name="state" class="form-control" required>
+                                    <input type="text" id="state" name="state" class="form-control" value="{{ form.state.value }}" required>
                                 </div>
                                 <div class="col form-group">
                                     <label for="country">Country</label>
-                                    <input type="text" id="country" name="country" class="form-control" required>
+                                    <input type="text" id="country" name="country" class="form-control" value="{{ form.country.value }}" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col form-group">
                                     <label for="order_note">Order Note</label>
-                                    <textarea id="order_note" name="order_note" class="form-control"></textarea>
+                                    <textarea id="order_note" name="order_note" class="form-control">{{ form.order_note.value }}</textarea>
                                 </div>
                             </div>
-                    
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+                                </div>
+                            </div>
+                        </form>
+                        <a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
                     </div>
                 </div>
-        
-            </aside> <!-- col.// -->
-            
+            </aside>
+
             <aside class="col-lg-6">
                 <div class="card">
                     <table class="table table-borderless table-shopping-cart">
@@ -89,7 +92,7 @@
                                     <figure class="itemside align-items-center">
                                         <div class="aside"><img src="{{ cart_item.product.image.url }}" class="img-sm"></div>
                                         <figcaption class="info">
-                                            <a href="{{ cart_item.product.get.url }}" class="title text-dark">{{ cart_item.product.Product_name }}</a>
+                                            <a href="{{ cart_item.product.get.url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
                                             <p class="text-muted small">
                                                 {% if cart_item.variations.all %}
                                                     {% for item in cart_item.variations.all %}
@@ -101,33 +104,29 @@
                                     </figure>
                                 </td>
                                 <td>
-                                    <label for="">{{ cart_item.quantity }}</label>
+                                    <label>{{ cart_item.quantity }}</label>
                                 </td>
                                 <td> 
                                     <div class="price-wrap"> 
                                         <var class="price">${{ cart_item.sub_total }}</var> 
                                         <small class="text-muted"> ${{ cart_item.product.price }} each </small> 
-                                    </div> <!-- price-wrap .// -->
+                                    </div>
                                 </td>
-
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
-                </div> <!-- card.// -->
-                
+                </div>
+
                 <div class="card mt-4">
                     <div class="card-body">
                         <button type="submit" name="submit" class="btn btn-primary btn-block">Place Order</button>
                         <a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
-                    </div> <!-- card-body.// -->
-                </div> <!-- card.// -->
-
-            </aside> <!-- col.// -->
-        </div> <!-- row.// -->
-
-    </div> <!-- container .//  -->
-
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
 </section>
 
 {% endblock %}

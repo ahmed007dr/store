@@ -1,33 +1,46 @@
-from django.shortcuts import render ,redirect
-from carts.models import CartItem 
-from .forms import OrderForm 
+from django.shortcuts import render, redirect
+from carts.models import CartItem
+from .forms import OrderForm
 import datetime
 from .models import Order
-# Create your views here.
 
-    # # if the cart count is less than or equl to zero , then redirect baack to shop
-
-def place_order(request, total = 0 , quantity = 0):
+def place_order(request, total=0, quantity=0):
     current_user = request.user
+    print(f"Current user: {current_user}")
+
     cart_items = CartItem.objects.filter(user=current_user)
-    cart_count = cart_items.count()
-    if cart_count <= 0:
-        return redirect('store')
+    print(f"Cart items: {cart_items}")
     
+    cart_count = cart_items.count()
+    print(f"Cart count: {cart_count}")
+    
+    if cart_count <= 0:
+        print("Redirecting to store because cart is empty")
+        return redirect('store')
+
     grand_total = 0
     tax = 0
 
     for cart_item in cart_items:
         total = (cart_item.product.price * cart_item.quantity)
+        print(f"Item total: {total}")
         
         quantity += cart_item.quantity
+        print(f"Current quantity: {quantity}")
+        
         tax = (14 * total) / 100
+        print(f"Tax amount: {tax}")
+        
         grand_total = total + tax
+        print(f"Grand total: {grand_total}")
 
     if request.method == 'POST':
-        form = OrderForm(request.POST)  
+        form = OrderForm(request.POST)
+        print(f"POST request received with data: {request.POST}")
+        
         if form.is_valid():
-            # store the order in database
+            print("Form is valid")
+            # Store the order in the database
             data = Order()
             data.first_name = form.cleaned_data['first_name']
             data.last_name = form.cleaned_data['last_name']
@@ -36,24 +49,31 @@ def place_order(request, total = 0 , quantity = 0):
             data.address_line_1 = form.cleaned_data['address_line_1']
             data.address_line_2 = form.cleaned_data['address_line_2']
             data.country = form.cleaned_data['country']
-            data.status = form.cleaned_data['status']
+            data.state = form.cleaned_data['state']
             data.city = form.cleaned_data['city']
             data.order_note = form.cleaned_data['order_note']
             data.order_total = grand_total
             data.tax = tax
             data.ip = request.META.get('REMOTE_ADDR')
-            data.save()
-            # genertion order number 
+
+            # Generate order number
             yr = int(datetime.date.today().strftime('%Y'))
             dt = int(datetime.date.today().strftime('%d'))
             mt = int(datetime.date.today().strftime('%m'))
-            d = datetime.date(yr,mt,dt)
-            current_date = d.strftime('%Y%m%d') # 2024 07 03
+            d = datetime.date(yr, mt, dt)
+            current_date = d.strftime('%Y%m%d')  # 2024 07 03
             order_number = current_date + str(data.id)
             data.order_number = order_number
-            data.save()
+
+            print(f"Order data to be saved: {data}")
+            
+            # Uncomment the following line when you want to save the order
+            # data.save()
+            
             return redirect('checkout')
     else:
         form = OrderForm()
+        print("GET request received")
 
-    # #return render(request, 'place_order.html')
+    # Uncomment the following line when you want to render the template
+    # return render(request, 'place_order.html', {'form': form})
