@@ -11,8 +11,7 @@ from store.models import Product
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
-
-def place_order(request, total=0, quantity=0,):
+def place_order(request, total=0, quantity=0):
     current_user = request.user
 
     # If the cart count is less than or equal to 0, then redirect back to shop
@@ -26,7 +25,7 @@ def place_order(request, total=0, quantity=0,):
     for cart_item in cart_items:
         total += (cart_item.product.price * cart_item.quantity)
         quantity += cart_item.quantity
-    tax = (14 * total)/100
+    tax = (14 * total) / 100
     grand_total = total + tax
 
     if request.method == 'POST':
@@ -37,7 +36,7 @@ def place_order(request, total=0, quantity=0,):
             data.user = current_user
             data.first_name = form.cleaned_data['first_name']
             data.last_name = form.cleaned_data['last_name']
-            data.phone_number = form.cleaned_data['phone']
+            data.phone_number = form.cleaned_data['phone_number']
             data.email = form.cleaned_data['email']
             data.address_line_1 = form.cleaned_data['address_line_1']
             data.address_line_2 = form.cleaned_data['address_line_2']
@@ -53,8 +52,8 @@ def place_order(request, total=0, quantity=0,):
             yr = int(datetime.date.today().strftime('%Y'))
             dt = int(datetime.date.today().strftime('%d'))
             mt = int(datetime.date.today().strftime('%m'))
-            d = datetime.date(yr,mt,dt)
-            current_date = d.strftime("%Y%m%d") #20210305
+            d = datetime.date(yr, mt, dt)
+            current_date = d.strftime("%Y%m%d")  # 20210305
             order_number = current_date + str(data.id)
             data.order_number = order_number
             data.save()
@@ -68,6 +67,11 @@ def place_order(request, total=0, quantity=0,):
                 'grand_total': grand_total,
             }
             return render(request, 'orders/payments.html', context)
+        else:
+            # Log form errors
+            print("Form is invalid")
+            print(form.errors)
+            return HttpResponse(f"Invalid form data: {form.errors}", status=400)
     else:
         return redirect('checkout')
 
@@ -77,11 +81,11 @@ def payments(request):
 
     # Store transaction details inside Payment model
     payment = Payment(
-        user = request.user,
-        payment_id = body['transID'],
-        payment_method = body['payment_method'],
-        amount_paid = order.order_total,
-        status = body['status'],
+        user=request.user,
+        payment_id=body['transID'],
+        payment_method=body['payment_method'],
+        amount_paid=order.order_total,
+        status=body['status'],
     )
     payment.save()
 
@@ -109,7 +113,6 @@ def payments(request):
         orderproduct.variations.set(product_variation)
         orderproduct.save()
 
-
         # Reduce the quantity of the sold products
         product = Product.objects.get(id=item.product_id)
         product.stock -= item.quantity
@@ -118,9 +121,9 @@ def payments(request):
     # Clear cart
     CartItem.objects.filter(user=request.user).delete()
 
-    # Send order recieved email to customer
+    # Send order received email to customer
     mail_subject = 'Thank you for your order!'
-    message = render_to_string('orders/order_recieved_email.html', {
+    message = render_to_string('orders/order_received_email.html', {
         'user': request.user,
         'order': order,
     })
@@ -134,7 +137,6 @@ def payments(request):
         'transID': payment.payment_id,
     }
     return JsonResponse(data)
-
 
 def order_complete(request):
     order_number = request.GET.get('order_number')

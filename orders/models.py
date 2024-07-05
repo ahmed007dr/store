@@ -26,7 +26,7 @@ class Order(models.Model):
     }
 
     user = models.ForeignKey(Account,on_delete=models.CASCADE)
-    payment = models.ForeignKey(Payment,on_delete=models.CASCADE,null=True,blank=True)
+    payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, null=True, blank=True)
     order_number = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -47,10 +47,10 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def full_name(self):
-        return f'(self.first_name) (self.last_name)'
+        return f'{self.first_name} {self.last_name}'
 
     def full_address(self):
-        return f'(self.address_line_1) (self.address_line_2)'
+        return f'{self.address_line_1} {self.address_line_2}'
 
     def __str__(self):
         return self.first_name
