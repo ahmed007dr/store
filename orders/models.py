@@ -26,7 +26,7 @@ class Order(models.Model):
     }
 
     user = models.ForeignKey(Account,on_delete=models.CASCADE)
-    payment = models.ForeignKey(Payment,on_delete=models.CASCADE)
+    payment = models.ForeignKey(Payment,on_delete=models.CASCADE,null=True,blank=True)
     order_number = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
