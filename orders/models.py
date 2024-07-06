@@ -40,7 +40,7 @@ class Order(models.Model):
     order_note = models.CharField(max_length=100)
     order_total = models.CharField(max_length=100)
     tax = models.CharField(max_length=100)
-    status = models.CharField(max_length=100)
+    status = models.CharField(max_length=100,choices=STATUS,default='New')
     ip = models.CharField(max_length=100)
     is_ordered = models.BooleanField(default=False)
     created_at = models.DateField(auto_now_add=True)
