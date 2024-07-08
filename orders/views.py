@@ -78,6 +78,18 @@ def place_order(request, total=0, quantity=0):
 def payments(request):
     body = json.loads(request.body)
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
+    # # Mock request.body for testing
+    # body = {
+    #     'orderID': 'mock_order_id_123',
+    #     'transID': 'mock_trans_id_456',
+    #     'payment_method': 'mock_method',
+    #     'status': 'Completed',
+    # }
+
+    # # Convert mock body to json string and then back to dictionary to simulate real scenario
+    # body = json.loads(json.dumps(body))
+
+    # order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
 
     # Store transaction details inside Payment model
     payment = Payment(
