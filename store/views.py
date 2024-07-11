@@ -11,6 +11,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .forms import ReviewForm
 from django.contrib import messages
 
+from orders.models import OrderProduct
 
 def store(request, category_slug=None):
     categories = None
@@ -50,14 +51,18 @@ def product_details(request,category_slug,product_slug):
     try:
         single_product = Product.objects.get(category__slug=category_slug , slug=product_slug)
         in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=single_product).exists()
-
-        
     except Exception as e :
         raise e
     
+    try:
+        orderproduct = OrderProduct.objects.filter(user=request.user, product_id=single_product.id).exists()
+    except OrderProduct.DoesNotExist:
+        orderproduct = None
+
     context = {
         'single_product' : single_product,
         'in_cart':in_cart,
+        'orderproduct':orderproduct,
         }
     
 
