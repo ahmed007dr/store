@@ -53,3 +53,6 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     def has_module_perms(self, app_label):
         return self.is_superuser
+
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
