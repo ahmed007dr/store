@@ -154,6 +154,10 @@ def my_orders(request):
         }
     return render(request,'accounts/my_orders.html',context)
 
+def edit_profile(request):
+    user = request.user
+    return render(request,'accounts/edit_profile.html')
+
 def forgotPassword(request):
     if request.method == 'POST':
         email = request.POST.get('email')
