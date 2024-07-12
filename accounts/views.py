@@ -14,6 +14,7 @@ from .models import Account
 from carts.models import Cart ,CartItem
 from carts.views import _cart_id
 import requests
+from orders.models import Order
 
 
 
@@ -138,7 +139,13 @@ def resend_verification_email(request):
 
 @login_required(login_url='login')
 def dashbord(request):
-    return render (request,'accounts/dashbord.html')
+    order = Order.objects.order_by('-created_at').filter(user_id=request.user.id,is_ordered=True)
+    order_count = order.count()
+    context = {
+        'order_count': order_count,
+    }
+
+    return render (request,'accounts/dashbord.html',context)
 
 def forgotPassword(request):
     if request.method == 'POST':
