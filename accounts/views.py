@@ -180,6 +180,8 @@ def edit_profile(request):
             }
     return render(request,'accounts/edit_profile.html',context)
 
+
+
 def forgotPassword(request):
     if request.method == 'POST':
         email = request.POST.get('email')
