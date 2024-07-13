@@ -264,3 +264,10 @@ def changePassword(request):
     else:
         return render(request,'accounts/change_password.html')
     
+@login_required(login_url='login')
+def order_detail(request,order_id):
+    order = Order.objects.get(order_number=order_id)
+    context = {
+        'order':order
+        }
+    return render(request,'accounts/order_detail.html',context)
