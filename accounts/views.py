@@ -142,8 +142,11 @@ def resend_verification_email(request):
 def dashbord(request):
     order = Order.objects.order_by('-created_at').filter(user_id=request.user.id,is_ordered=True)
     order_count = order.count()
+
+    userprofile = UserProfile.objects.get(user_id=request.user.id)
     context = {
         'order_count': order_count,
+        'userprofile':userprofile,
     }
 
     return render (request,'accounts/dashbord.html',context)
