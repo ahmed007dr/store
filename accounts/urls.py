@@ -15,5 +15,7 @@ urlpatterns = [
     path('resetpassword/', views.resetpassword, name='resetpassword'),
     path('my_orders/',views.my_orders,name="my_orders"),
     path('edit_profile/',views.edit_profile,name="edit_profile"),
+    path('changePassword/',views.changePassword,name="changePassword"),
+    # path('profile/', views.profile, name='profile'),
 
 ]
