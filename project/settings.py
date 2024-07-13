@@ -166,7 +166,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 SITE_ID = config('SITE_ID',cast=int) 
 
 
-SESSION_EXPIRE_SECONDS = 60  # one mint #django-session-timeout
+SESSION_EXPIRE_SECONDS = 3600  # one mint #django-session-timeout
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 SESSION_TIMEOUT_REDIRECT = 'accounts/login/' # redicrt
 
