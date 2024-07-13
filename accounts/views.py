@@ -155,7 +155,7 @@ def my_orders(request):
     return render(request,'accounts/my_orders.html',context)
 
 def edit_profile(request):
-    # userprofile = get_object_or_404(UserProfile,user=request.user)
+    userprofile = get_object_or_404(UserProfile,user=request.user)
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
@@ -172,6 +172,7 @@ def edit_profile(request):
         context = {
             'user_form': user_form,
             'profile_form': profile_form,
+            'userprofile':userprofile,
             }
     return render(request,'accounts/edit_profile.html',context)
 
