@@ -7,6 +7,7 @@ from carts.views import _cart_id
 from django.core.paginator import EmptyPage,PageNotAnInteger,Paginator
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
 
 from .forms import ReviewForm
 from django.contrib import messages
@@ -46,33 +47,36 @@ def store(request, category_slug=None):
 
     return render(request, 'store/store.html', context)
 
+def product_details(request, category_slug, product_slug):
+    # Get the product or return a 404 if not found
+    single_product = get_object_or_404(Product, category__slug=category_slug, slug=product_slug)
 
-def product_details(request,category_slug,product_slug):
-    try:
-        single_product = Product.objects.get(category__slug=category_slug , slug=product_slug)
-        in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=single_product).exists()
-    except Exception as e :
-        raise e
+    # Check if the product is in the cart
+    in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=single_product).exists()
     
-    
-    try:
-        orderproduct = OrderProduct.objects.filter(user=request.user, product_id=single_product.id).exists()
-    except OrderProduct.DoesNotExist:
-        orderproduct = None
+    # Check if the user is authenticated before querying OrderProduct
+    if request.user.is_authenticated:
+        try:
+            orderproduct = OrderProduct.objects.filter(user=request.user, product_id=single_product.id).exists()
+        except OrderProduct.DoesNotExist:
+            orderproduct = False  # No need for None here, just a boolean
+    else:
+        orderproduct = False  # User is not authenticated, so they can't have an order
 
-    # get the reviews
-    review = ReviewRating.objects.filter(product_id=single_product.id,status=True)
+    # Get the reviews for the product
+    review = ReviewRating.objects.filter(product_id=single_product.id, status=True)
 
-
+    # Prepare context for the template
     context = {
-        'single_product' : single_product,
-        'in_cart':in_cart,
-        'orderproduct':orderproduct,
-        'review':review,
-        }
-    
+        'single_product': single_product,
+        'in_cart': in_cart,
+        'orderproduct': orderproduct,
+        'review': review,
+    }
 
-    return render ( request,'store/product_details.html',context)
+    # Render the template with context
+    return render(request, 'store/product_details.html', context)
+
 
 
 def search(request):
