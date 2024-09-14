@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'store',
     'carts',
     'orders',
+    'settingz',
     'admin_honeypot',
 
 ]
@@ -81,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'category.context_processors.menu_links',
+                'settingz.settings_context_processor.get_settings',
                 'carts.context_processors.counter',
             ],
         },
