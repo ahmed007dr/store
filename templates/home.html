@@ -1,51 +1,70 @@
-
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
+
 {% block content %}
 
 <!-- ========================= SECTION MAIN ========================= -->
 <section class="section-intro padding-y-sm">
-<div class="container">
+    <div class="container">
+        <div class="intro-banner-wrap">
+            <div class="text-overlay">
+                <h1>{{ settings_data.name }}</h1>
+                <p>{{ settings_data.subtitle }}</p>
+            </div>
 
-<div class="intro-banner-wrap">
-	<img src="{% static 'images/banners/ahmed.jpg' %}" class="img-fluid rounded">
-</div>
+            <img src="{{ settings_data.logo.url }}" class="img-fluid rounded" alt="{% translate 'Logo' %}">
 
-</div> <!-- container //  -->
+        </div>
+        <style>
+            .intro-banner-wrap {
+                position: relative;
+                text-align: center;
+            }
+
+            .text-overlay {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translateX(-50%);
+                color: white; /* Or any color that fits the image background */
+                background: rgba(0, 0, 0, 0.5); /* Semi-transparent background to improve text readability */
+                padding: 20px;
+                border-radius: 10px;
+            }
+
+            .intro-banner-wrap img {
+                width: 100%;
+                height: auto;
+            }
+        </style>
+    </div> <!-- container //  -->
 </section>
 <!-- ========================= SECTION MAIN END// ========================= -->
 
 <!-- ========================= SECTION  ========================= -->
 <section class="section-name padding-y-sm">
-<div class="container">
+    <div class="container">
+        <header class="section-heading">
+            <a href="{% url 'store' %}" class="btn btn-outline-primary float-right">{% translate 'See all' %}</a>
+            <h3 class="section-title">{% translate 'Popular products' %}</h3>
+        </header><!-- sect-heading -->
 
-<header class="section-heading">
-	<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
-	<h3 class="section-title">Popular products</h3>
-</header><!-- sect-heading -->
-
-	
-<div class="row">
-	{% for product in products %}
-	<div class="col-md-3">
-		<div class="card card-product-grid">
-			<a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.image.url }}"> </a>
-			<figcaption class="info-wrap">
-				<a href="{{ product.get_url }}" class="title">{{ product.Product_name }}</a>
-				<div class="price mt-1">${{product.price}}</div> <!-- price-wrap.// -->
-			</figcaption>
-		</div>
-	</div> <!-- col.// -->
-	{% endfor %}
-</div> <!-- row.// -->
-
-</div><!-- container // -->
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-3">
+                <div class="card card-product-grid">
+                    <a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.image.url }}" alt="{{ product.Product_name }}"> </a>
+                    <figcaption class="info-wrap">
+                        <a href="{{ product.get_url }}" class="title">{{ product.Product_name }}</a>
+                        <div class="price mt-1">${{ product.price }}</div> <!-- price-wrap.// -->
+                    </figcaption>
+                </div>
+            </div> <!-- col.// -->
+            {% endfor %}
+        </div> <!-- row.// -->
+    </div><!-- container // -->
 </section>
-<!-- ========================= SECTION  END// ========================= -->
-
-
-
-</body>
-</html>
+<!-- ========================= SECTION END// ========================= -->
 
 {% endblock %}

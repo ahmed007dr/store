@@ -1,0 +1,312 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-14 20:15+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+#: .\templates\accounts\order_detail.html:18
+#: .\templates\orders\order_complete.html:28
+msgid "Invoice logo"
+msgstr "شعار الفاتورة"
+
+#: .\templates\accounts\order_detail.html:25
+#: .\templates\orders\order_complete.html:36
+msgid "Invoiced To"
+msgstr "فاتورة إلى"
+
+#: .\templates\accounts\order_detail.html:39
+#: .\templates\orders\order_complete.html:50
+msgid "Order"
+msgstr "النظام"
+
+#: .\templates\accounts\order_detail.html:40
+#: .\templates\orders\order_complete.html:51
+msgid "Transaction ID"
+msgstr "معرف المعاملة"
+
+#: .\templates\accounts\order_detail.html:41
+msgid "Order Date:"
+msgstr "تاريخ الطلب:"
+
+#: .\templates\accounts\order_detail.html:42
+msgid "Status:"
+msgstr "الحالة:"
+
+#: .\templates\accounts\order_detail.html:52
+#: .\templates\orders\order_complete.html:63
+msgid "Products"
+msgstr "المنتجات"
+
+#: .\templates\accounts\order_detail.html:53
+#: .\templates\orders\order_complete.html:64
+msgid "Qty"
+msgstr "الكمية"
+
+#: .\templates\accounts\order_detail.html:54
+#: .\templates\orders\order_complete.html:65
+msgid "Total"
+msgstr "المجموع"
+
+#: .\templates\accounts\order_detail.html:70
+#: .\templates\accounts\order_detail.html:77
+#: .\templates\accounts\order_detail.html:81
+#: .\templates\accounts\order_detail.html:86
+#: .\templates\orders\order_complete.html:81
+#: .\templates\orders\order_complete.html:88
+#: .\templates\orders\order_complete.html:92
+#: .\templates\orders\order_complete.html:96
+msgid "EGP"
+msgstr "ج.م"
+
+#: .\templates\accounts\order_detail.html:76
+msgid "Sub Total:"
+msgstr "المجموع الفرعي:"
+
+#: .\templates\accounts\order_detail.html:80
+msgid "Tax:"
+msgstr "الضريبة:"
+
+#: .\templates\accounts\order_detail.html:85
+msgid "Grand Total:"
+msgstr "المجموع الكلي:"
+
+#: .\templates\accounts\order_detail.html:93
+#: .\templates\orders\order_complete.html:103
+msgid "Thank you for shopping with us!"
+msgstr "شكرًا لك على التسوق معنا!"
+
+#: .\templates\accounts\register.html:15
+#: .\templates\accounts\resetpassword.html:34
+msgid "Sign up"
+msgstr "قم بالتسجيل"
+
+#: .\templates\accounts\register.html:22
+msgid "First name"
+msgstr "الاسم الأول"
+
+#: .\templates\accounts\register.html:26
+msgid "Last name"
+msgstr "الاسم الأخير"
+
+#: .\templates\accounts\register.html:33
+msgid "Email address"
+msgstr "عنوان البريد الإلكتروني"
+
+#: .\templates\accounts\register.html:37
+msgid "Phone"
+msgstr "الهاتف"
+
+#: .\templates\accounts\register.html:44
+msgid "Create password"
+msgstr "إنشاء كلمة المرور"
+
+#: .\templates\accounts\register.html:48
+msgid "Repeat password"
+msgstr "كرر كلمة المرور"
+
+#: .\templates\accounts\register.html:54 .\templates\include\navbar.html:81
+msgid "Register"
+msgstr "التسجيل"
+
+#: .\templates\accounts\register.html:74
+msgid "Have an account?"
+msgstr "هل لديك حساب؟"
+
+#: .\templates\accounts\register.html:74
+msgid "Log In"
+msgstr "تسجيل الدخول"
+
+#: .\templates\accounts\register.html:85
+msgid "Copyright"
+msgstr "حقوق النشر"
+
+#: .\templates\accounts\register.html:85
+msgid "All rights reserved"
+msgstr "جميع الحقوق محفوظة"
+
+#: .\templates\accounts\register.html:88
+msgid "Terms and conditions"
+msgstr "الشروط والأحكام"
+
+#: .\templates\accounts\resetpassword.html:10
+msgid "Reset Password"
+msgstr "إعادة تعيين كلمة المرور"
+
+#: .\templates\accounts\resetpassword.html:22
+msgid "Create Password"
+msgstr "إنشاء كلمة المرور"
+
+#: .\templates\accounts\resetpassword.html:25
+msgid "Confirm Password"
+msgstr "تأكيد كلمة المرور"
+
+#: .\templates\accounts\resetpassword.html:28
+msgid "Reset"
+msgstr "إعادة تعيين"
+
+#: .\templates\accounts\resetpassword.html:34
+msgid "Don't have an account?"
+msgstr "ليس لديك حساب؟"
+
+#: .\templates\home.html:16 .\templates\include\navbar.html:44
+msgid "Logo"
+msgstr "الشعار"
+
+#: .\templates\home.html:49
+msgid "See all"
+msgstr "انظر الكل"
+
+#: .\templates\home.html:50
+msgid "Popular products"
+msgstr "المنتجات الشعبية"
+
+#: .\templates\include\dashbord_sidebar.html:6
+#: .\templates\include\navbar.html:88
+msgid "Dashboard"
+msgstr "لوحة القيادة"
+
+#: .\templates\include\dashbord_sidebar.html:7
+msgid "My Orders"
+msgstr "أوامري"
+
+#: .\templates\include\dashbord_sidebar.html:8
+msgid "Edit Profile"
+msgstr "تحرير الملف الشخصي"
+
+#: .\templates\include\dashbord_sidebar.html:9
+msgid "Change Password"
+msgstr "تغيير كلمة المرور"
+
+#: .\templates\include\dashbord_sidebar.html:12
+#: .\templates\include\navbar.html:89
+msgid "Log out"
+msgstr "تسجيل الخروج"
+
+#: .\templates\include\navbar.html:7
+msgid "Toggle navigation"
+msgstr "تبديل التنقل"
+
+#: .\templates\include\navbar.html:28
+msgid "USD"
+msgstr "دولار أمريكي"
+
+#: .\templates\include\navbar.html:32
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: .\templates\include\navbar.html:33
+msgid "Call us"
+msgstr "اتصل بنا"
+
+#: .\templates\include\navbar.html:50
+msgid "All category"
+msgstr "جميع الفئات"
+
+#: .\templates\include\navbar.html:53
+msgid "ALL PRODUCTS"
+msgstr "جميع المنتجات"
+
+#: .\templates\include\navbar.html:65
+msgid "Search"
+msgstr "بحث"
+
+#: .\templates\include\navbar.html:78
+msgid "Welcome guest!"
+msgstr "مرحبا بالضيف!"
+
+#: .\templates\include\navbar.html:80
+msgid "Sign in"
+msgstr "تسجيل الدخول"
+
+#: .\templates\include\navbar.html:86
+msgid "Welcome"
+msgstr "مرحباً"
+
+#: .\templates\orders\order_complete.html:9
+msgid "Payment Successful"
+msgstr "تم الدفع بنجاح"
+
+#: .\templates\orders\order_complete.html:12
+msgid "Shop more"
+msgstr "تسوق أكثر"
+
+#: .\templates\orders\order_complete.html:52
+msgid "Order Date"
+msgstr "تاريخ الطلب"
+
+#: .\templates\orders\order_complete.html:53
+msgid "Status"
+msgstr "الحالة"
+
+#: .\templates\orders\order_complete.html:87
+msgid "Sub Total"
+msgstr "المجموع الفرعي"
+
+#: .\templates\orders\order_complete.html:91
+#: .\templates\orders\payments.html:90
+msgid "Tax"
+msgstr "الضريبة"
+
+#: .\templates\orders\order_complete.html:95
+#: .\templates\orders\payments.html:94
+msgid "Grand Total"
+msgstr "المجموع الكلي"
+
+#: .\templates\orders\payments.html:11
+msgid "Review Your Order and Make Payment"
+msgstr "راجع طلبك وقم بالدفع"
+
+#: .\templates\orders\payments.html:16
+msgid "Billing Address"
+msgstr "عنوان الفواتير"
+
+#: .\templates\orders\payments.html:25
+msgid "Order Note"
+msgstr "مذكرة الطلب"
+
+#: .\templates\orders\payments.html:30
+msgid "Payment Method"
+msgstr "طريقة الدفع"
+
+#: .\templates\orders\payments.html:32 .\templates\orders\payments.html:138
+msgid "PayPal"
+msgstr "باي بال"
+
+#: .\templates\orders\payments.html:36
+msgid "Review Products"
+msgstr "مراجعة المنتجات"
+
+#: .\templates\orders\payments.html:41
+msgid "Product"
+msgstr "المنتج"
+
+#: .\templates\orders\payments.html:42
+msgid "Quantity"
+msgstr "الكمية"
+
+#: .\templates\orders\payments.html:43
+msgid "Price"
+msgstr "السعر"
+
+#: .\templates\orders\payments.html:71
+msgid "each"
+msgstr "لكل منهما"
+
+#: .\templates\orders\payments.html:86
+msgid "Total price"
+msgstr "السعر الإجمالي"
+
