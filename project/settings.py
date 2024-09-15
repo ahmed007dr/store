@@ -41,13 +41,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'ugettext_lazy',
+    'admin_honeypot',
+
     'category',
     'accounts',
     'store',
     'carts',
     'orders',
     'settingz',
-    'admin_honeypot',
 
 ]
 
