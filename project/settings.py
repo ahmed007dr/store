@@ -42,8 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'ugettext_lazy',
-    'admin_honeypot',
+    # 'admin_honeypot',
 
     'category',
     'accounts',
